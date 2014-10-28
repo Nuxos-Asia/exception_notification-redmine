@@ -1,3 +1,4 @@
 Version 0.0.1: Initial release
 Version 0.0.2: Use a custom field to avoid creation of same issue multiple times
-Version 0.1.0: Version bump, add README.md, TODO.md and LICENSE
+Version 0.1.0: Version bump, add README.md, TODO.md and LICENCE
+Version 0.1.1: Update README.md

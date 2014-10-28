@@ -36,7 +36,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # assigned_to_id: create issues which are assigned to the given user_id
   # priority_id: create issues with the given priority_id
   # status_id: create issues with the given status_id
-  # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. 
+  # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19.
   
   :redmine => {
     :host_url => "http://redmine.example.com",
