@@ -4,6 +4,8 @@ This gem add a Redmine notifier to Exception Notification.
 
 This Ruby gem is an extension of the [exception_notification gem](http://rubygems.org/gems/exception_notification) to support creating issues in Redmine.
 
+[![Gem Version](https://badge.fury.io/rb/exception_notification-redmine.svg)](http://badge.fury.io/rb/exception_notification-redmine)
+
 ## Installation
 
 Add this line to your application's Gemfile:
