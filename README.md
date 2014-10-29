@@ -30,6 +30,7 @@ As of Rails 3 ExceptionNotification-Redmine is used as a rack middleware, or in 
 Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # host_url: url of your Redmine host
   # issues_url: issues.json (Redmine REST API)
+  # issues_prefix: text prepended to the issue title (default: "[Error]")
   # api_key: the api key of the user that will be used to create the Redmine issue
   # project_id: create issues in the project with the given id, where id is either project_id or project identifier
   # tracker_id: create issues with the given tracker_id
@@ -39,8 +40,9 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19.
   
   :redmine => {
-    :host_url => "http://redmine.example.com",
+    :host_url => "https://redmine.example.com",
     :issues_url => "issues.json",
+    :issues_prefix => "[Error]",
     :api_key => "123456",
     :project_id => "test-project",
     :tracker_id => "1", # Bug
