@@ -39,6 +39,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # assigned_to_id: create issues which are assigned to the given user_id
   # priority_id: create issues with the given priority_id
   # status_id: create issues with the given status_id
+  # fixed_version_id: create issues with the given fixed_version_id (aka target version id)
   # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19.
   
   :redmine => {
@@ -51,6 +52,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
     :assigned_to_id => "123",
     :priority_id => "6", # Urgent
     :status_id => "1", # New
+    :fixed_version_id => "1", # id of the issue target version on redmine
     :x_checksum_cf_id => "19" # DOM id in Redmine issue form
   }
 ```

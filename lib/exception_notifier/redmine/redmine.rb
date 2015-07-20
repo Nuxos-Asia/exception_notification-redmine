@@ -46,6 +46,7 @@ module ExceptionNotifier
       issue[:status_id] = @config[:status_id]
       issue[:priority_id] = @config[:priority_id]
       issue[:assigned_to_id] = @config[:assigned_to_id]
+      issue[:fixed_version_id] = @config[:fixed_version_id]
       issue[:subject] = compose_subject
       issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
                                  :value => encode_subject(issue[:subject])}]
