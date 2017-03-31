@@ -33,7 +33,7 @@ module ExceptionNotifier
       @env        = env
       @exception  = exception
       @options    = options
-      @kontroller = env['action_controller.instance'] || MissingController.new
+      @kontroller = env['action_controller.instance'] || Redmine::MissingController.new
       @request    = ActionDispatch::Request.new(env)
       @backtrace  = exception.backtrace ? clean_backtrace(exception) : []
       @data       = (env['exception_notifier.exception_data'] || {}).merge(options[:data] || {})
