@@ -41,7 +41,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # status_id: create issues with the given status_id
   # fixed_version_id: create issues with the given fixed_version_id (aka target version id)
   # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19.
-  
+
   :redmine => {
     :host_url => "https://redmine.example.com",
     :issues_url => "issues.json",

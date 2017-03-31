@@ -5,16 +5,14 @@ require 'erb'
 require 'pp'
 
 module ExceptionNotifier
-  
   class RedmineNotifier
-    
     module Redmine
       class MissingController
         def method_missing(*args, &block)
         end
       end
     end
-    
+
     def initialize(config)
       @config = config
     end
@@ -26,7 +24,7 @@ module ExceptionNotifier
         create_issue(issue) unless issue_exist?(issue)
       end
     end
-    
+
     private
 
     def compose_data(env, exception, options = {})
@@ -38,22 +36,22 @@ module ExceptionNotifier
       @backtrace  = exception.backtrace ? clean_backtrace(exception) : []
       @data       = (env['exception_notifier.exception_data'] || {}).merge(options[:data] || {})
     end
-    
+
     def compose_issue
       issue = {}
       issue[:project_id] = @config[:project_id]
       issue[:tracker_id] = @config[:tracker_id]
       issue[:status_id] = @config[:status_id]
       issue[:priority_id] = @config[:priority_id]
-      issue[:assigned_to_id] = @config[:assigned_to_id]
-      issue[:fixed_version_id] = @config[:fixed_version_id]
+      issue[:assigned_to_id] = @config[:assigned_to_id] unless @config[:assigned_to_id].nil?
+      issue[:fixed_version_id] = @config[:fixed_version_id] unless @config[:fixed_version_id].nil?
       issue[:subject] = compose_subject
       issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
                                  :value => encode_subject(issue[:subject])}]
       issue[:description] = compose_description
       issue
     end
-    
+
     def compose_subject
       subject = "#{@config[:issues_prefix]} " || "[Error] "
       subject << "#{@kontroller.controller_name}##{@kontroller.action_name}" if @kontroller
@@ -94,7 +92,7 @@ module ExceptionNotifier
     def encode_subject(subject)
       Digest::SHA2.hexdigest(subject)
     end
-    
+
     def clean_backtrace(exception)
       if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
         Rails.backtrace_cleaner.send(:filter, exception.backtrace)
