@@ -84,7 +84,10 @@ module ExceptionNotifier
       x_checksum = issue[:custom_fields][0][:value]
       response = ::HTTParty.send(:get, issues_url("project_id" => @config[:project_id],
                                                   "cf_#{@config[:x_checksum_cf_id]}" => x_checksum))
-      raise "Unexpected Response" if response.nil? || response["total_count"].nil?
+      if response.nil? || response["total_count"].nil?
+        Rails.logger.debug "Received unexpected response: #{response.inspect}"
+        raise "Unexpected Response"
+      end
       response["total_count"] > 0
     end
 
