@@ -75,7 +75,7 @@ module ExceptionNotifier
     def create_issue(issue)
       options = { :body => { :issue => issue }.to_json,
                   :headers => { "Content-Type" => "application/json" } }
-      response = ::HTTParty.send(:post, issues_url, options)
+      ::HTTParty.send(:post, issues_url, options)
     end
 
     def issue_exist?(issue)

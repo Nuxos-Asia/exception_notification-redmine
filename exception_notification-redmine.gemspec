@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = 'exception_notification-redmine'
   s.version       = ExceptionNotification::Redmine::VERSION
   s.authors = ["Richard Piacentini", "Suttipong Wisittanakorn"]
-  s.date = "2016-03-31"
+  s.date = "2017-04-05"
   s.summary = "This gem add a Redmine notifier to Exception Notification"
   s.description = "This Ruby gem is an extension of the exception_notification gem to support creating issues in Redmine"
   s.homepage = "https://github.com/Nuxos-Asia/exception_notification-redmine"
@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
   s.add_dependency("exception_notification", "~> 4.0")
   s.add_dependency("httparty", "~> 0.10")
   s.add_dependency("json", ">= 1.8")
-  
+
   s.add_development_dependency "bundler", "~> 1.7"
   s.add_development_dependency "rake", ">= 10.0"
-  
+
 end
