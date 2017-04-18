@@ -1,4 +1,5 @@
 ### Version 0.3.1
+- Add Codeclimate badge
 - Remove useless variable
 - Update release date
 
