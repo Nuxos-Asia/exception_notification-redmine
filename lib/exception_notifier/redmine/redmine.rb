@@ -61,7 +61,11 @@ module ExceptionNotifier
     end
 
     def compose_description
-      template_path = "#{File.dirname(__FILE__)}/views/exception_notifier/issue.text.erb"
+      if @config[:formatting] == "textile"
+        template_path = "#{File.dirname(__FILE__)}/views/exception_notifier/issue.text.erb"
+      else
+        template_path = "#{File.dirname(__FILE__)}/views/exception_notifier/issue.md.text.erb"
+      end
       template = File.open(template_path, "r").read
       ERB.new(template, nil, '-').result(binding)
     end
