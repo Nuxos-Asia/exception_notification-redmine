@@ -21,7 +21,13 @@ module ExceptionNotifier
       unless options[:env].nil?
         compose_data(options[:env], exception, options)
         issue = compose_issue
-        create_issue(issue) unless issue_exist?(issue)
+        old_issues = issue_exist?(issue)
+        if old_issues["total_count"] > 0
+          puts old_issues
+          update_existing(issue, old_issues)
+        else
+          create_issue(issue)
+        end
       end
     end
 
@@ -46,8 +52,15 @@ module ExceptionNotifier
       issue[:assigned_to_id] = @config[:assigned_to_id] unless @config[:assigned_to_id].nil?
       issue[:fixed_version_id] = @config[:fixed_version_id] unless @config[:fixed_version_id].nil?
       issue[:subject] = compose_subject
-      issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
+      if @config[:x_hit_count_cf_id] == nil or @config[:x_hit_count_cf_id] == ""
+        issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
                                  :value => encode_subject(issue[:subject])}]
+      else
+        issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
+                                   :value => encode_subject(issue[:subject])},
+                                 { :id    => @config[:x_hit_count_cf_id],
+                                   :value => 1}]
+      end
       issue[:description] = compose_description
       issue
     end
@@ -90,9 +103,15 @@ module ExceptionNotifier
         Rails.logger.debug "Received unexpected response: #{response.inspect}"
         raise "Unexpected Response"
       end
-      response["total_count"] > 0
+      return response
     end
+    def update_existing(issue, old_issue)
+      if @config[:x_hit_count_cf_id] == nil or @config[:x_hit_count_cf_id] == ""
+        puts "Hit count option not specified. Will not update"
+      else
 
+      end
+    end
     def encode_subject(subject)
       Digest::SHA2.hexdigest(subject)
     end

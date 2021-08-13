@@ -56,7 +56,8 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
     :status_id => "1", # New
     :fixed_version_id => "1", # id of the issue target version on redmine
     :x_checksum_cf_id => "19", # DOM id in Redmine issue form
-    :formatting => "textile" #Optional defaults to Markdown if left out or any other type is input.
+    :formatting => "textile", #Optional defaults to Markdown if left out or any other type is input.
+    :x_hit_count_cf_id =>"20", #Optional if issue already exits it will update that issue with more information. If nil it will not update the custom field hit counter. DOM id in Redmine issue form
   }
 ```
 ## Contributing
