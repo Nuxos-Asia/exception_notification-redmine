@@ -114,7 +114,7 @@ module ExceptionNotifier
         puts "Hit count option not specified. Will not update"
       else
         hit_count = 0
-        old_issue[0]["custom_fields"][0].each do |custom|
+        old_issues[0]["custom_fields"][0].each do |custom|
           if custom[:id] == @config[:x_hit_count_cf_id]
             hit_count = custom[:value].to_i + 1
             break
