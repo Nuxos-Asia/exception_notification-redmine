@@ -54,7 +54,7 @@ module ExceptionNotifier
       issue[:subject] = compose_subject
       if @config[:x_hit_count_cf_id] == nil or @config[:x_hit_count_cf_id] == ""
         issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
-                                 :value => encode_subject(issue[:subject])}]
+                                   :value   => encode_subject(issue[:subject])}]
       else
         issue[:custom_fields] = [{ :id    => @config[:x_checksum_cf_id],
                                    :value => encode_subject(issue[:subject])},
@@ -88,7 +88,11 @@ module ExceptionNotifier
       encoded_params = URI.encode_www_form(default_params.merge(params))
       "#{@config[:host_url]}/#{@config[:issues_url]}?#{encoded_params}"
     end
-
+    def update_url(params = {}, issue_id)
+      default_params = { :key => @config[:api_key] }
+      encoded_params = URI.encode_www_form(default_params.merge(params))
+      "#{@config[:host_url]}/#{@config[:issues_url]}/#{issue_id}?#{encoded_params}"
+    end
     def create_issue(issue)
       options = { :body => { :issue => issue }.to_json,
                   :headers => { "Content-Type" => "application/json" } }
@@ -109,7 +113,19 @@ module ExceptionNotifier
       if @config[:x_hit_count_cf_id] == nil or @config[:x_hit_count_cf_id] == ""
         puts "Hit count option not specified. Will not update"
       else
-
+        hit_count = 0
+        old_issue[0]["custom_fields"][0].each do |custom|
+          if custom[:id] == @config[:x_hit_count_cf_id]
+            hit_count = custom[:value].to_i + 1
+            break
+          end
+        end
+        issue = {}
+        issue[:custom_fields] = [{ :id    => @config[:x_hit_count_cf_id],
+                                   :value => hit_count}]
+        options = { :body => { :issue => issue }.to_json,
+                    :headers => { "Content-Type" => "application/json" } }
+        ::HTTParty.send(:put, update_url, options)
       end
     end
     def encode_subject(subject)
