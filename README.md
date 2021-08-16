@@ -43,10 +43,12 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # fixed_version_id: create issues with the given fixed_version_id (aka target version id)
   # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19. Make sure you set the custom field to be used as a filter
   # formatting: Redmine offers Markdown or Textile. Optional value. Will default to Markdown if anything else is entered other than textile. You will need to set this based on what you have in Redmine Administration -> Settings -> Text formatting
+  
 
   :redmine => {
     :host_url => "https://redmine.example.com",
-    :issues_url => "issues.json",
+    :issues_url => "issues", #Note Depreciation warning for updating code. Old versions included the format within the issues url. However in order to update issues the format needs to proceed the ticket number. For now the old formatting will continue to work provided that you have not added x_hit_count_cf_id to your config. Please update to include request_format as this fallback may be removed in a future revision of this gem to save on code size.
+    :request_format => "json",
     :issues_prefix => "[Error]",
     :api_key => "123456",
     :project_id => "test-project",
@@ -58,6 +60,8 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
     :x_checksum_cf_id => "19", # DOM id in Redmine issue form
     :formatting => "textile", #Optional defaults to Markdown if left out or any other type is input.
     :x_hit_count_cf_id =>"20", #Optional if issue already exits it will update that issue with more information. If nil it will not update the custom field hit counter. DOM id in Redmine issue form
+    :add_note_on_update  => true, #Optional if issue already exits it will update that issue and add a note to the issue with the description. Requires x_hit_count_cf_id to be set first
+    :reopen_issue_if_closed => [1, [3, 5, 6], 8] #Optional, will reopen issue if closed. to setup put the id values for your statuses [reopen to, [array of closed statuses. if any of these the issue will be reopened], wontfix]
   }
 ```
 ## Contributing
