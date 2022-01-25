@@ -4,15 +4,19 @@ This gem add a Redmine notifier to Exception Notification.
 
 This Ruby gem is an extension of the [exception_notification gem](http://rubygems.org/gems/exception_notification) to support creating issues in Redmine.
 
-[![Gem Version](https://badge.fury.io/rb/exception_notification-redmine.svg)](http://badge.fury.io/rb/exception_notification-redmine)
-[![Code Climate](https://codeclimate.com/repos/58e48dd2516c00025a0010f7/badges/5d0990208e8564efc2ed/gpa.svg)](https://codeclimate.com/repos/58e48dd2516c00025a0010f7/feed)
+## Fork notice.
+This fork exists as a updated version of the [http://rubygems.org/gems/exception_notification-redmine](http://rubygems.org/gems/exception_notification-redmine) gem.
+I have attempted to contact the original developer to add these changes however this has been unsuccessful.
+The devs have been inactive for a few years and the companies website is now dead so assuming the original project will not be maintained.
+
+As this is a gem I use I am looking at taking over development. At present there is no build on rubygems. You will need to install directly from this fork. Installation instructions have been updated to this end.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'exception_notification-redmine'
+gem 'exception_notification-redmine', :git => 'https://github.com/geocom/exception_notification-redmine.git'
 ```
 
 And then execute:
@@ -20,14 +24,18 @@ And then execute:
     $ bundle
 
 Or install it yourself as:
-
-    $ gem install exception_notification-redmine
+    $ git clone https://github.com/geocom/exception_notification-redmine.git
+    $ cd exception_notification-redmine
+    $ rake gem
+    $ gem install pkg/exception_notification-redmine-<version>.gem
 
 ## Usage
 
 **IMPORTANT:** You must create a custom field named `x_checksum` in your Redmine project for the Redmine notifier to work properly
+**IMPORTANT FOR OPTIONAL SETTING:** To enable the hit counter you must add `x_hit_count` in your Redmine project for the Redmine notifier to work properly with updating an existing issue
+**IMPORTANT FOR OPTIONAL SETTING:** You must add a wontfix status if you enable reopening of closed issues.
 
-As of Rails 3 ExceptionNotification-Redmine is used as a rack middleware, or in the environment you want it to run. In most cases you would want ExceptionNotification-Redmine to run on production. Thus, you can make it work by putting the following lines in your `config/environments/production.rb`:
+As of Rails 3 ExceptionNotification-Redmine is used as a rack middleware, or in the environment you want it to run. In most cases you would want ExceptionNotification-Redmine to run on production. Thus, you can make it work by putting the following lines in your `/config/initializers` folder you can also add this to `config/environments/production.rb` however rails wipes this file when updating along with the fact that if you use git you risk adding your credentials or removing production.rb from the repo.:
 
 ```ruby
 Whatever::Application.config.middleware.use ExceptionNotification::Rack,
@@ -43,7 +51,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
   # fixed_version_id: create issues with the given fixed_version_id (aka target version id)
   # x_checksum_cf_id: custom field used to avoid creation of the same issue multiple times. You must use the DOM id assigned by Redmine to this field in the issue form. You can find it by creating an issue manually in your project and inspecting the HTML form, you should see something like name="issue[custom_field_values][19]", in this case the id would be 19. Make sure you set the custom field to be used as a filter
   # formatting: Redmine offers Markdown or Textile. Optional value. Will default to Markdown if anything else is entered other than textile. You will need to set this based on what you have in Redmine Administration -> Settings -> Text formatting
-  
+
 
   :redmine => {
     :host_url => "https://redmine.example.com",
@@ -66,7 +74,7 @@ Whatever::Application.config.middleware.use ExceptionNotification::Rack,
 ```
 ## Contributing
 
-1. Fork it ( https://github.com/Nuxos-Asia/exception_notification-redmine/fork )
+1. Fork it ( https://github.com/geocom/exception_notification-redmine/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

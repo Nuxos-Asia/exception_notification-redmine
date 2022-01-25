@@ -1,3 +1,9 @@
+### Version 0.3.3
+- Update Licence(Please note this does not change the base copyright just modifications made by myself and is still licenced under the MIT licence)
+- Add Markdown Support(Defaults to markdown. If you want to keep redcloth please see the README)
+- Add Updating issues so that more information is provided rather than just being quiet(Optional)
+- Update README
+
 ### Version 0.3.2
 - Add Codeclimate badge
 
