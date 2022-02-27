@@ -7,7 +7,7 @@ This Ruby gem is an extension of the [exception_notification gem](http://rubygem
 ## Fork notice.
 This fork exists as a updated version of the [http://rubygems.org/gems/exception_notification-redmine](http://rubygems.org/gems/exception_notification-redmine) gem.
 I have attempted to contact the original developer to add these changes however this has been unsuccessful.
-The devs have been inactive for a few years and the companies website is now dead so assuming the original project will not be maintained.
+The devs have been inactive for a few years and the companies website is now dead so assuming the original maintainers are no longer actively maintaining this gem
 
 As this is a gem I use I am looking at taking over development. At present there is no build on rubygems. You will need to install directly from this fork. Installation instructions have been updated to this end.
 
@@ -32,8 +32,10 @@ Or install it yourself as:
 ## Usage
 
 **IMPORTANT:** You must create a custom field named `x_checksum` in your Redmine project for the Redmine notifier to work properly
-**IMPORTANT FOR OPTIONAL SETTING:** To enable the hit counter you must add `x_hit_count` in your Redmine project for the Redmine notifier to work properly with updating an existing issue
-**IMPORTANT FOR OPTIONAL SETTING:** You must add a wontfix status if you enable reopening of closed issues.
+
+**IMPORTANT FOR OPTIONAL SETTING:** To enable the hit counter you must add `x_hit_count` in your Redmine project so existing issues can be updated with an occurrence number
+
+**IMPORTANT FOR OPTIONAL SETTING:** You must add a wontfix status in redmine to enable reopening of closed issues.
 
 As of Rails 3 ExceptionNotification-Redmine is used as a rack middleware, or in the environment you want it to run. In most cases you would want ExceptionNotification-Redmine to run on production. Thus, you can make it work by putting the following lines in your `/config/initializers` folder you can also add this to `config/environments/production.rb` however rails wipes this file when updating along with the fact that if you use git you risk adding your credentials or removing production.rb from the repo.:
 
